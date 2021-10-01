@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import Movies from "./moviesDatabase.js";
+import Cors from "cors";
 
 //app config
 const app = express();
@@ -8,6 +9,7 @@ const port = process.env.PORT || 9000;
 
 //middleware
 app.use(express.json());
+app.use(Cors());
 
 //db config
 const connectionUrl =
@@ -28,6 +30,16 @@ db.once("open", () => {
 //api routes
 app.get("/", (req, res) => {
   res.send("Hello world");
+});
+
+app.get("/all", (req, res) => {
+  Movies.find((err, data) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).send(data);
+    }
+  });
 });
 
 app.post("/movies/new", (req, res) => {
