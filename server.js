@@ -32,7 +32,7 @@ app.get("/", (req, res) => {
   res.send("Hello world");
 });
 
-app.get("/all", (req, res) => {
+app.get("/movies/all", (req, res) => {
   Movies.find((err, data) => {
     if (err) {
       res.status(500).send(err);
@@ -40,6 +40,32 @@ app.get("/all", (req, res) => {
       res.status(200).send(data);
     }
   });
+});
+
+app.get("/movies/latest", (req, res) => {
+  Movies.find()
+    .sort({ releaseDate: "desc" })
+    .exec((err, data) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.status(200).send(data);
+      }
+    });
+});
+
+app.get("/movies/:genre", (req, res) => {
+  let genre = req.params.genre;
+  genre = genre.charAt(0).toUpperCase() + genre.slice(1);
+  Movies.find({ genres: { $in: [genre] } })
+    .sort({ releaseDate: "desc" })
+    .exec((err, data) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.status(200).send(data);
+      }
+    });
 });
 
 app.post("/movies/new", (req, res) => {
