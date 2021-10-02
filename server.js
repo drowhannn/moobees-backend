@@ -33,14 +33,13 @@ app.get("/", (req, res) => {
 });
 
 app.get("/all", (req, res) => {
-  // Movies.find((err, data) => {
-  //   if (err) {
-  //     res.status(500).send(err);
-  //   } else {
-  //     res.status(200).send(data);
-  //   }
-  // });
-  res.send("Hello all.");
+  Movies.find((err, data) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).send(data);
+    }
+  });
 });
 
 app.post("/movies/new", (req, res) => {
