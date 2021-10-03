@@ -68,6 +68,17 @@ app.get("/movies/:genre", (req, res) => {
     });
 });
 
+app.get("/movie/:id", (req, res) => {
+  let id = req.params.id;
+  Movies.findById(id, (err, data) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).send(data);
+    }
+  });
+});
+
 app.post("/movies/new", (req, res) => {
   const movieData = req.body;
   Movies.create(movieData, (err, data) => {
