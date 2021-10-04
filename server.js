@@ -54,8 +54,8 @@ app.get("/movies/latest", (req, res) => {
     });
 });
 
-app.get("/movies/genre/:genre", (req, res) => {
-  let genre = req.params.genre;
+app.get("/movies/genre/:g", (req, res) => {
+  let genre = req.params.g;
   genre = genre.charAt(0).toUpperCase() + genre.slice(1);
   Movies.find({ genres: { $in: [genre] } })
     .sort({ releaseDate: "desc" })
@@ -68,8 +68,8 @@ app.get("/movies/genre/:genre", (req, res) => {
     });
 });
 
-app.get("/movie/id/:id", (req, res) => {
-  let id = req.params.id;
+app.get("/movie/id/:i", (req, res) => {
+  let id = req.params.i;
   Movies.findById(id, (err, data) => {
     if (err) {
       res.status(500).send(err);
