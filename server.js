@@ -67,6 +67,18 @@ app.get("/movies/genre/:g", (req, res) => {
       }
     });
 });
+app.get("/movies/keyword/:k", (req, res) => {
+  let keyword = req.params.k;
+  Movies.find({ keywords: { $in: [keyword] } })
+    .sort({ releaseDate: "desc" })
+    .exec((err, data) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.status(200).send(data);
+      }
+    });
+});
 
 app.get("/movie/id/:i", (req, res) => {
   let id = req.params.i;
